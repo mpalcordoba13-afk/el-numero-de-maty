@@ -1,356 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <title>El Número de Maty — Proyecto Matemático Experimental</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="title" content="El Número de Maty">
+  <meta name="description" content="Proyecto web experimental inspirado en teoría de Ramsey, hipercubos, números gigantes extremos y visualización matemática avanzada.">
+  <meta name="keywords" content="Número de Maty, Maty Number, teoría de Ramsey, hipercubos, números gigantes, Graham Number, matemática, combinatoria extrema">
+  <meta name="author" content="Matias">
+  <meta name="robots" content="index, follow">
+  <!-- Open Graph / Discord / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="El Número de Maty">
+  <meta property="og:description" content="Exploración experimental inspirada en teoría de Ramsey, hipercubos y números gigantes extremos.">
+  <meta property="og:url" content="https://mpalcordoba13-afk.github.io/el-numero-de-maty/">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="El Número de Maty">
+  <meta name="twitter:description" content="Proyecto experimental inspirado en teoría de Ramsey y visualización matemática avanzada.">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
-:root{
-  --bg:#070b14;--bg2:#0d1626;
-  --glass:rgba(255,255,255,0.03);--gb:rgba(255,255,255,0.07);
-  --acc:#2de0ca;--acc2:#7b8fff;
-  --txt:#d8e8f2;--mut:#6a7e95;
-  --mono:Consolas,'Courier New',monospace;
-  --serif:Georgia,'Times New Roman',serif
-}
-body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden}
-#hero{position:relative;height:400px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--gb)}
-#tc{position:absolute;top:0;left:0;width:100%;height:100%}
-.hi{position:relative;z-index:2;text-align:center;padding:2rem}
-.badge{display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);border:1px solid rgba(45,224,202,.22);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem}
-h1{font-family:var(--serif);font-size:clamp(26px,5vw,42px);font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1.1;margin-bottom:1rem}
-.sub{font-size:13px;color:var(--mut);max-width:440px;margin:0 auto 1.5rem}
-.hf{font-family:var(--mono);font-size:17px;color:var(--acc);background:rgba(45,224,202,.05);border:1px solid rgba(45,224,202,.16);display:inline-block;padding:8px 22px;border-radius:6px}
-.sec{padding:2.5rem 2rem;border-bottom:1px solid var(--gb)}
-.slbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:.4rem}
-.stit{font-family:var(--serif);font-size:23px;font-weight:400;color:#fff;margin-bottom:1.2rem}
-.card{background:var(--glass);border:1px solid var(--gb);border-radius:12px;padding:1.25rem}
-.eq{background:rgba(0,0,0,.38);border-left:3px solid var(--acc);padding:.75rem 1.2rem;border-radius:0 8px 8px 0;margin:.9rem 0;overflow-x:auto}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-#tw{background:#010408;border:1px solid rgba(45,224,202,.16);border-radius:12px;overflow:hidden;margin-bottom:1rem}
-.th{background:rgba(45,224,202,.03);border-bottom:1px solid rgba(45,224,202,.1);padding:.6rem 1rem;display:flex;align-items:center;gap:7px}
-.td{width:10px;height:10px;border-radius:50%}
-.tt{font-family:var(--mono);font-size:11px;color:var(--mut);margin-left:6px}
-#tb{font-family:var(--mono);font-size:12px;line-height:1.9;padding:1rem;min-height:200px;max-height:340px;overflow-y:auto;color:#7aaa90}
-.tl{opacity:0;transition:opacity .22s}
-.tl.on{opacity:1}
-.tp{color:var(--acc)}.tw{color:#ffcc44}.te{color:#ff6060}.tdm{color:#243545}
-#verdict{display:none;margin-top:1rem;background:rgba(255,70,70,.04);border:1px solid rgba(255,70,70,.16);border-radius:10px;padding:1.5rem;text-align:center}
-#verdict h3{font-family:var(--serif);font-size:20px;color:#ff7575;margin-bottom:.5rem}
-#verdict p{font-size:13px;color:var(--mut)}
-.vtag{margin-top:.9rem;padding-top:.75rem;border-top:1px solid rgba(255,70,70,.1);font-size:10px;color:rgba(255,80,80,.38);font-family:var(--mono);letter-spacing:.1em}
-.btn{background:transparent;border:1px solid var(--acc);color:var(--acc);font-family:var(--mono);font-size:12px;padding:9px 22px;border-radius:6px;cursor:pointer;letter-spacing:.08em;transition:all .16s}
-.btn:hover{background:rgba(45,224,202,.07)}
-.btn:disabled{opacity:.32;cursor:not-allowed}
-.btn2{border-color:var(--mut);color:var(--mut)}
-.btn2:hover{background:rgba(106,126,149,.07)}
-.sb{height:5px;border-radius:3px;margin:6px 0}
-.si{margin-bottom:.9rem}
-.sn{font-size:13px;color:var(--txt)}
-.sl{font-size:11px;color:var(--mut);margin-bottom:3px}
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
-.reveal.vis{opacity:1;transform:none}
-footer{padding:2rem;text-align:center;font-size:12px;color:var(--mut);border-top:1px solid var(--gb)}
-.katex{color:inherit}
-.katex-display{overflow-x:auto;overflow-y:hidden}
-</style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#070b14;--bg2:#0d1626;
+      --glass:rgba(255,255,255,0.03);--gb:rgba(255,255,255,0.07);
+      --acc:#2de0ca;--acc2:#7b8fff;
+      --txt:#d8e8f2;--mut:#6a7e95;
+      --mono:Consolas,'Courier New',monospace;
+      --serif:Georgia,'Times New Roman',serif
+    }
+    body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.7;overflow-x:hidden}
+    #hero{position:relative;height:400px;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--gb)}
+    #tc{position:absolute;top:0;left:0;width:100%;height:100%}
+    .hi{position:relative;z-index:2;text-align:center;padding:2rem}
+    .badge{display:inline-block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);border:1px solid rgba(45,224,202,.22);padding:5px 16px;border-radius:20px;margin-bottom:1.5rem}
+    h1{font-family:var(--serif);font-size:clamp(26px,5vw,42px);font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1.1;margin-bottom:1rem}
+    .sub{font-size:13px;color:var(--mut);max-width:440px;margin:0 auto 1.5rem}
+    .hf{font-family:var(--mono);font-size:17px;color:var(--acc);background:rgba(45,224,202,.05);border:1px solid rgba(45,224,202,.16);display:inline-block;padding:8px 22px;border-radius:6px}
+    .sec{padding:2.5rem 2rem;border-bottom:1px solid var(--gb)}
+    .slbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:.4rem}
+    .stit{font-family:var(--serif);font-size:23px;font-weight:400;color:#fff;margin-bottom:1.2rem}
+    .card{background:var(--glass);border:1px solid var(--gb);border-radius:12px;padding:1.25rem}
+    .eq{background:rgba(0,0,0,.38);border-left:3px solid var(--acc);padding:.75rem 1.2rem;border-radius:0 8px 8px 0;margin:.9rem 0;overflow-x:auto}
+    .g2{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+    @media(max-width:520px){.g2{grid-template-columns:1fr}}
+    #tw{background:#010408;border:1px solid rgba(45,224,202,.16);border-radius:12px;overflow:hidden;margin-bottom:1rem}
+    .th{background:rgba(45,224,202,.03);border-bottom:1px solid rgba(45,224,202,.1);padding:.6rem 1rem;display:flex;align-items:center;gap:7px}
+    .td{width:10px;height:10px;border-radius:50%}
+    .tt{font-family:var(--mono);font-size:11px;color:var(--mut);margin-left:6px}
+    #tb{font-family:var(--mono);font-size:12px;line-height:1.9;padding:1rem;min-height:200px;max-height:340px;overflow-y:auto;color:#7aaa90}
+    .tl{opacity:0;transition:opacity .22s}
+    .tl.on{opacity:1}
+    .tp{color:var(--acc)}.tw2{color:#ffcc44}.te{color:#ff6060}.tdm{color:#243545}
+    #verdict{display:none;margin-top:1rem;background:rgba(255,70,70,.04);border:1px solid rgba(255,70,70,.16);border-radius:10px;padding:1.5rem;text-align:center}
+    #verdict h3{font-family:var(--serif);font-size:20px;color:#ff7575;margin-bottom:.5rem}
+    #verdict p{font-size:13px;color:var(--mut)}
+    .vtag{margin-top:.9rem;padding-top:.75rem;border-top:1px solid rgba(255,70,70,.1);font-size:10px;color:rgba(255,80,80,.38);font-family:var(--mono);letter-spacing:.1em}
+    .btn{background:transparent;border:1px solid var(--acc);color:var(--acc);font-family:var(--mono);font-size:12px;padding:9px 22px;border-radius:6px;cursor:pointer;letter-spacing:.08em;transition:all .16s}
+    .btn:hover{background:rgba(45,224,202,.07)}
+    .btn:disabled{opacity:.32;cursor:not-allowed}
+    .btn2{border-color:var(--mut);color:var(--mut)}
+    .btn2:hover{background:rgba(106,126,149,.07)}
+    .sb{height:5px;border-radius:3px;margin:6px 0}
+    .si{margin-bottom:.9rem}
+    .sn{font-size:13px;color:var(--txt)}
+    .sl{font-size:11px;color:var(--mut);margin-bottom:3px}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+    .reveal.vis{opacity:1;transform:none}
+    footer{padding:2rem;text-align:center;font-size:12px;color:var(--mut);border-top:1px solid var(--gb)}
+    .katex{color:inherit}
+    .katex-display{overflow-x:auto;overflow-y:hidden}
+  </style>
+</head>
+<body>
 
-<h2 class="sr-only">El Número de Maty — Divulgación científica sobre combinatoria extrema y teoría de Ramsey en hipercubos</h2>
-
-<section id="hero">
-  <canvas id="tc"></canvas>
-  <div class="hi">
-    <div class="badge">Teoría de Ramsey &nbsp;·&nbsp; Hipercubos &nbsp;·&nbsp; Combinatoria Extrema</div>
-    <h1>El Número de Maty</h1>
-    <p class="sub">Una constante combinatoria cuya magnitud trasciende cualquier herramienta computacional conocida por la humanidad</p>
-    <div class="hf" id="k-hf"></div>
-  </div>
-</section>
-
-<section class="sec reveal" id="s1">
-  <div class="slbl">§ 01 — Definición Formal</div>
-  <div class="stit">La Constante Maty(4, 2)</div>
-  <div class="card">
-    <p style="color:var(--mut);font-size:13px;margin-bottom:1rem">Sea <span id="k-qn"></span> el grafo hipercubo de dimensión <em>n</em>, con vértices <span id="k-01n"></span> conectados cuando difieren en exactamente un bit.</p>
-    <div class="eq" id="k-def"></div>
-    <p style="font-size:12px;color:var(--mut);margin-top:.75rem">donde <span id="k-chi"></span> asigna color rojo o azul a cada arista de <span id="k-qN2"></span>.</p>
-  </div>
-  <div class="g2" style="margin-top:.75rem">
-    <div class="card">
-      <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.6rem">SUBGRAFO OBJETIVO</div>
-      <div id="k-c4"></div>
-      <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Ciclo monocromático de 4 vértices en subespacio afín 2D de <span id="k-qN3"></span>.</p>
+  <section id="hero">
+    <canvas id="tc"></canvas>
+    <div class="hi">
+      <div class="badge">Teoría de Ramsey &nbsp;·&nbsp; Hipercubos &nbsp;·&nbsp; Combinatoria Extrema</div>
+      <h1>El Número de Maty</h1>
+      <p class="sub">Una constante combinatoria cuya magnitud trasciende cualquier herramienta computacional conocida por la humanidad</p>
+      <div class="hf" id="k-hf"></div>
     </div>
-    <div class="card">
-      <div style="font-size:10px;color:var(--acc2);letter-spacing:.12em;margin-bottom:.6rem">ESPACIO AMBIENTE</div>
-      <div id="k-qndef"></div>
-      <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Con <span id="k-vc"></span> vértices y <span id="k-ec"></span> aristas.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="sec reveal" id="s2">
-  <div class="slbl">§ 02 — Magnitud y Notación</div>
-  <div class="stit">La Notación de Flechas de Knuth</div>
-  <div class="card">
-    <p style="font-size:13px;color:var(--mut);margin-bottom:1rem">El valor de <span id="k-m1"></span> se expresa mediante la <strong style="color:var(--txt)">notación de flechas arriba de Knuth</strong>:</p>
-    <div class="eq" id="k-knuth" style="text-align:center"></div>
-    <div style="margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--gb)">
-      <div style="font-size:11px;color:var(--mut);margin-bottom:.65rem">Parámetros de la expresión:</div>
-      <div style="display:flex;flex-direction:column;gap:.55rem">
-        <div id="k-p1" style="font-size:13px"></div>
-        <div id="k-p2" style="font-size:13px"></div>
-        <div id="k-p3" style="font-size:13px"></div>
+  <section class="sec reveal" id="s1">
+    <div class="slbl">§ 01 — Definición Formal</div>
+    <div class="stit">La Constante Maty(4, 2)</div>
+    <div class="card">
+      <p style="color:var(--mut);font-size:13px;margin-bottom:1rem">Sea <span id="k-qn"></span> el grafo hipercubo de dimensión <em>n</em>, con vértices <span id="k-01n"></span> conectados cuando difieren en exactamente un bit.</p>
+      <div class="eq" id="k-def"></div>
+      <p style="font-size:12px;color:var(--mut);margin-top:.75rem">donde <span id="k-chi"></span> asigna color rojo o azul a cada arista de <span id="k-qN2"></span>.</p>
+    </div>
+    <div class="g2" style="margin-top:.75rem">
+      <div class="card">
+        <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.6rem">SUBGRAFO OBJETIVO</div>
+        <div id="k-c4"></div>
+        <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Ciclo monocromático de 4 vértices en subespacio afín 2D de <span id="k-qN3"></span>.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;color:var(--acc2);letter-spacing:.12em;margin-bottom:.6rem">ESPACIO AMBIENTE</div>
+        <div id="k-qndef"></div>
+        <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Con <span id="k-vc"></span> vértices y <span id="k-ec"></span> aristas.</p>
       </div>
     </div>
-  </div>
-  <div class="card" style="margin-top:.75rem">
-    <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:1rem">ESCALA COMPARATIVA — JERARQUÍA LOG-ITERADA</div>
-    <div class="si">
-      <div class="sn">Átomos en el universo observable</div>
-      <div class="sl"><span id="k-atoms"></span></div>
-      <div class="sb" style="width:7%;background:rgba(123,143,255,.3)"></div>
-    </div>
-    <div class="si">
-      <div class="sn">Número de Graham <span id="k-g64"></span></div>
-      <div class="sl">Inexpresable en cualquier notación estándar</div>
-      <div class="sb" style="width:24%;background:rgba(123,143,255,.55)"></div>
-    </div>
-    <div class="si">
-      <div class="sn">Número de Maty — <span id="k-m2"></span></div>
-      <div class="sl">Trasciende al Número de Graham como este trasciende a 1</div>
-      <div class="sb" style="width:100%;background:var(--acc)"></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="sec reveal" id="s3">
-  <div class="slbl">§ 03 — Verificación Computacional</div>
-  <div class="stit">Análisis de Intratabilidad Algorítmica</div>
-  <p style="font-size:13px;color:var(--mut);margin-bottom:1.2rem">El sistema ejecuta un análisis simbólico para clasificar la complejidad computacional del problema de verificación de <span id="k-m3"></span>.</p>
-  <div id="tw">
-    <div class="th">
-      <div class="td" style="background:#ff5f57"></div>
-      <div class="td" style="background:#ffbd2e"></div>
-      <div class="td" style="background:#28ca41"></div>
-      <div class="tt">Ramsey Symbolic Analyzer v4.2.1 — Maty Research Lab</div>
-    </div>
-    <div id="tb"></div>
-  </div>
-  <div style="display:flex;gap:.8rem;align-items:center">
-    <button class="btn" id="runBtn" onclick="runTerm()">▶  Ejecutar Verificación</button>
-    <button class="btn btn2" id="rstBtn" onclick="rstTerm()" style="opacity:0;pointer-events:none">↺  Reiniciar</button>
-  </div>
-  <div id="verdict">
-    <h3>⊘ ALGORÍTMICAMENTE INTRATABLE</h3>
-    <p>El problema de verificación de <span id="k-mv"></span> pertenece a una clase de complejidad que supera <strong style="color:var(--txt)">EXPSPACE</strong> por órdenes de magnitud no formalizables. Ningún sistema computacional físicamente realizable puede abordar esta instancia.</p>
-    <div class="vtag">CLASIFICACIÓN: BEYONDSPACE · RAMSEY-HYPERCUBE-HARD · KNUTH-TOWER-COMPLETE</div>
-  </div>
-</section>
-
-<section class="sec reveal" id="s4">
-  <div class="slbl">§ 04 — Geometría del Problema</div>
-  <div class="stit">El Hipercubo <span id="k-qnT"></span> en Rotación</div>
-  <div class="g2" style="margin-bottom:.75rem">
+  <section class="sec reveal" id="s2">
+    <div class="slbl">§ 02 — Magnitud y Notación</div>
+    <div class="stit">La Notación de Flechas de Knuth</div>
     <div class="card">
-      <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.5rem">DIMENSIÓN MÍNIMA</div>
-      <div style="font-size:24px;font-family:var(--serif);color:#fff;line-height:1.2">N ≥ Maty(4,2)</div>
-      <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Dimensión mínima donde el subgrafo monocromático es inevitable.</p>
+      <p style="font-size:13px;color:var(--mut);margin-bottom:1rem">El valor de <span id="k-m1"></span> se expresa mediante la <strong style="color:var(--txt)">notación de flechas arriba de Knuth</strong>:</p>
+      <div class="eq" id="k-knuth" style="text-align:center"></div>
+      <div style="margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--gb)">
+        <div style="font-size:11px;color:var(--mut);margin-bottom:.65rem">Parámetros de la expresión:</div>
+        <div style="display:flex;flex-direction:column;gap:.55rem">
+          <div id="k-p1" style="font-size:13px"></div>
+          <div id="k-p2" style="font-size:13px"></div>
+          <div id="k-p3" style="font-size:13px"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:.75rem">
+      <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:1rem">ESCALA COMPARATIVA — JERARQUÍA LOG-ITERADA</div>
+      <div class="si">
+        <div class="sn">Átomos en el universo observable</div>
+        <div class="sl"><span id="k-atoms"></span></div>
+        <div class="sb" style="width:7%;background:rgba(123,143,255,.3)"></div>
+      </div>
+      <div class="si">
+        <div class="sn">Número de Graham <span id="k-g64"></span></div>
+        <div class="sl">Inexpresable en cualquier notación estándar</div>
+        <div class="sb" style="width:24%;background:rgba(123,143,255,.55)"></div>
+      </div>
+      <div class="si">
+        <div class="sn">Número de Maty — <span id="k-m2"></span></div>
+        <div class="sl">Trasciende al Número de Graham como este trasciende a 1</div>
+        <div class="sb" style="width:100%;background:var(--acc)"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="s3">
+    <div class="slbl">§ 03 — Verificación Computacional</div>
+    <div class="stit">Análisis de Intratabilidad Algorítmica</div>
+    <p style="font-size:13px;color:var(--mut);margin-bottom:1.2rem">El sistema ejecuta un análisis simbólico para clasificar la complejidad computacional del problema de verificación de <span id="k-m3"></span>.</p>
+    <div id="tw">
+      <div class="th">
+        <div class="td" style="background:#ff5f57"></div>
+        <div class="td" style="background:#ffbd2e"></div>
+        <div class="td" style="background:#28ca41"></div>
+        <div class="tt">Ramsey Symbolic Analyzer v4.2.1 — Maty Research Lab</div>
+      </div>
+      <div id="tb"></div>
+    </div>
+    <div style="display:flex;gap:.8rem;align-items:center">
+      <button class="btn" id="runBtn" onclick="runTerm()">▶  Ejecutar Verificación</button>
+      <button class="btn btn2" id="rstBtn" onclick="rstTerm()" style="opacity:0;pointer-events:none">↺  Reiniciar</button>
+    </div>
+    <div id="verdict">
+      <h3>⊘ ALGORÍTMICAMENTE INTRATABLE</h3>
+      <p>El problema de verificación de <span id="k-mv"></span> pertenece a una clase de complejidad que supera <strong style="color:var(--txt)">EXPSPACE</strong> por órdenes de magnitud no formalizables. Ningún sistema computacional físicamente realizable puede abordar esta instancia.</p>
+      <div class="vtag">CLASIFICACIÓN: BEYONDSPACE · RAMSEY-HYPERCUBE-HARD · KNUTH-TOWER-COMPLETE</div>
+    </div>
+  </section>
+
+  <section class="sec reveal" id="s4">
+    <div class="slbl">§ 04 — Geometría del Problema</div>
+    <div class="stit">El Hipercubo <span id="k-qnT"></span> en Rotación</div>
+    <div class="g2" style="margin-bottom:.75rem">
+      <div class="card">
+        <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.5rem">DIMENSIÓN MÍNIMA</div>
+        <div style="font-size:24px;font-family:var(--serif);color:#fff;line-height:1.2">N ≥ Maty(4,2)</div>
+        <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Dimensión mínima donde el subgrafo monocromático es inevitable.</p>
+      </div>
+      <div class="card">
+        <div style="font-size:10px;color:var(--acc2);letter-spacing:.12em;margin-bottom:.5rem">CARDINALIDAD DE <span id="k-qncl"></span></div>
+        <div id="k-vceq"></div>
+        <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Cada vértice es un vector binario de longitud N.</p>
+      </div>
     </div>
     <div class="card">
-      <div style="font-size:10px;color:var(--acc2);letter-spacing:.12em;margin-bottom:.5rem">CARDINALIDAD DE <span id="k-qncl"></span></div>
-      <div id="k-vceq"></div>
-      <p style="font-size:12px;color:var(--mut);margin-top:.5rem">Cada vértice es un vector binario de longitud N.</p>
+      <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.5rem">VISUALIZACIÓN — PROYECCIÓN DEL TESERACTO <span id="k-q4"></span></div>
+      <p style="font-size:12px;color:var(--mut);margin-bottom:1rem">Proyección perspectiva 4D→2D con rotación simultánea en los seis planos de coordenadas. El espacio real del problema tiene dimensión <span id="k-mdim"></span>.</p>
+      <div style="display:flex;justify-content:center">
+        <canvas id="tc2" width="300" height="300" style="border-radius:8px;background:rgba(0,0,0,.5);border:1px solid var(--gb)"></canvas>
+      </div>
+      <p style="font-size:10px;color:var(--mut);text-align:center;margin-top:.6rem;font-family:var(--mono)">Q₄ · Teseracto 4D · Rotación continua en planos XW e YZ</p>
     </div>
-  </div>
-  <div class="card">
-    <div style="font-size:10px;color:var(--acc);letter-spacing:.12em;margin-bottom:.5rem">VISUALIZACIÓN — PROYECCIÓN DEL TESERACTO <span id="k-q4"></span></div>
-    <p style="font-size:12px;color:var(--mut);margin-bottom:1rem">Proyección perspectiva 4D→2D con rotación simultánea en los seis planos de coordenadas. El espacio real del problema tiene dimensión <span id="k-mdim"></span>.</p>
-    <div style="display:flex;justify-content:center">
-      <canvas id="tc2" width="300" height="300" style="border-radius:8px;background:rgba(0,0,0,.5);border:1px solid var(--gb)"></canvas>
-    </div>
-    <p style="font-size:10px;color:var(--mut);text-align:center;margin-top:.6rem;font-family:var(--mono)">Q₄ · Teseracto 4D · Rotación continua en planos XW e YZ</p>
-  </div>
-</section>
+  </section>
 
-<footer>
-  <div style="font-family:var(--mono);font-size:10px;color:rgba(45,224,202,.3);margin-bottom:.4rem;letter-spacing:.1em">MATY(4,2) RESEARCH DIVISION — THEORETICAL MATHEMATICS</div>
-  <div>Constructo matemático teórico con rigor académico formal. La existencia está garantizada por la teoría de Ramsey; su verificación computacional es imposible.</div>
-</footer>
+  <footer>
+    <div style="font-family:var(--mono);font-size:10px;color:rgba(45,224,202,.3);margin-bottom:.4rem;letter-spacing:.1em">MATY(4,2) RESEARCH DIVISION — THEORETICAL MATHEMATICS</div>
+    <div>Constructo matemático teórico con rigor académico formal. La existencia está garantizada por la teoría de Ramsey; su verificación computacional es imposible.</div>
+    <div style="margin-top:.5rem;font-size:11px">Autor: Matias &nbsp;·&nbsp; <a href="https://mpalcordoba13-afk.github.io/el-numero-de-maty/" style="color:var(--acc);text-decoration:none">mpalcordoba13-afk.github.io/el-numero-de-maty</a></div>
+  </footer>
 
-<script>
-function k(id,expr,disp){
-  const el=document.getElementById(id);
-  if(!el)return;
-  try{katex.render(expr,el,{displayMode:!!disp,throwOnError:false});}
-  catch(e){el.textContent=expr;}
-}
+  <script>
+    // ─── KaTeX ──────────────────────────────────────────────────────────────
+    function k(id,expr,disp){
+      const el=document.getElementById(id);
+      if(!el)return;
+      try{katex.render(expr,el,{displayMode:!!disp,throwOnError:false});}
+      catch(e){el.textContent=expr;}
+    }
 
-function initKaTeX(){
-  k('k-hf','N = Y \\uparrow^{G} Y');
-  k('k-qn','Q_n');
-  k('k-01n','\\{0,1\\}^n');
-  k('k-def',
-    '\\text{Maty}(4,2) = \\min\\!\\left\\{\\, N \\in \\mathbb{Z}^{+} :\\; \\forall\\,\\chi: E(Q_N) \\to \\{R,B\\},\\;\\exists\\, C_4 \\subseteq Q_N\\;\\text{monocromático en subespacio afín 2D}\\,\\right\\}',
-    true);
-  k('k-chi','\\chi: E(Q_N) \\to \\{R,\\, B\\}');
-  k('k-qN2','Q_N');
-  k('k-c4','C_4 \\hookrightarrow Q_N^{\\!\\text{afín}}',true);
-  k('k-qN3','Q_N');
-  k('k-qndef','Q_n = \\bigl(\\{0,1\\}^n,\\, E_n\\bigr)',true);
-  k('k-vc','2^n');
-  k('k-ec','n\\cdot 2^{n-1}');
-  k('k-m1','\\text{Maty}(4,2)');
-  k('k-knuth','N \\;=\\; Y \\;\\uparrow^{\\!G}\\; Y',true);
-  k('k-p1','Y = \\text{Número de Graham} = 3\\!\\uparrow^{64}\\!3');
-  k('k-p2','G = |\\!\\operatorname{dígitos}(Y)| \\;\\gg\\; 10^{\\,10^{\\,10^{\\,\\cdot^{\\,\\cdot^{\\,\\cdot}}}}}');
-  k('k-p3','Y\\!\\uparrow^{G}\\!Y \\;=\\; Y\\underbrace{\\uparrow\\!\\cdots\\!\\uparrow}_{G\\;\\text{flechas}}Y');
-  k('k-atoms','\\approx 10^{80}');
-  k('k-g64','(G_{64})');
-  k('k-m2','\\text{Maty}(4,2)');
-  k('k-m3','\\text{Maty}(4,2)');
-  k('k-mv','\\text{Maty}(4,2)');
-  k('k-qnT','Q_N');
-  k('k-qncl','Q_N');
-  k('k-vceq','|V(Q_N)| = 2^{N}',true);
-  k('k-q4','Q_4');
-  k('k-mdim','\\text{Maty}(4,2)');
-}
+    function initKaTeX(){
+      k('k-hf','N = Y \\uparrow^{G} Y');
+      k('k-qn','Q_n');
+      k('k-01n','\\{0,1\\}^n');
+      k('k-def',
+        '\\text{Maty}(4,2) = \\min\\!\\left\\{\\, N \\in \\mathbb{Z}^{+} :\\; \\forall\\,\\chi: E(Q_N) \\to \\{R,B\\},\\;\\exists\\, C_4 \\subseteq Q_N\\;\\text{monocromático en subespacio afín 2D}\\,\\right\\}',
+        true);
+      k('k-chi','\\chi: E(Q_N) \\to \\{R,\\, B\\}');
+      k('k-qN2','Q_N');
+      k('k-c4','C_4 \\hookrightarrow Q_N^{\\!\\text{afín}}',true);
+      k('k-qN3','Q_N');
+      k('k-qndef','Q_n = \\bigl(\\{0,1\\}^n,\\, E_n\\bigr)',true);
+      k('k-vc','2^n');
+      k('k-ec','n\\cdot 2^{n-1}');
+      k('k-m1','\\text{Maty}(4,2)');
+      k('k-knuth','N \\;=\\; Y \\;\\uparrow^{\\!G}\\; Y',true);
+      k('k-p1','Y = \\text{Número de Graham} = 3\\!\\uparrow^{64}\\!3');
+      k('k-p2','G = |\\!\\operatorname{d\\acute{\\imath}gitos}(Y)| \\;\\gg\\; 10^{\\,10^{\\,10^{\\,\\cdot^{\\,\\cdot^{\\,\\cdot}}}}}');
+      k('k-p3','Y\\!\\uparrow^{G}\\!Y \\;=\\; Y\\underbrace{\\uparrow\\!\\cdots\\!\\uparrow}_{G\\;\\text{flechas}}Y');
+      k('k-atoms','\\approx 10^{80}');
+      k('k-g64','(G_{64})');
+      k('k-m2','\\text{Maty}(4,2)');
+      k('k-m3','\\text{Maty}(4,2)');
+      k('k-mv','\\text{Maty}(4,2)');
+      k('k-qnT','Q_N');
+      k('k-qncl','Q_N');
+      k('k-vceq','|V(Q_N)| = 2^{N}',true);
+      k('k-q4','Q_4');
+      k('k-mdim','\\text{Maty}(4,2)');
+    }
 
-// ─── 4D Tesseract renderer ───────────────────────────────────────────────────
-function makeTesseract(cvId, projScale, speed){
-  const cv=document.getElementById(cvId);
-  if(!cv)return;
-  const W=cv.width,H=cv.height,cx=cv.getContext('2d');
-  const V=[];
-  for(let i=0;i<16;i++) V.push([((i>>0)&1)*2-1,((i>>1)&1)*2-1,((i>>2)&1)*2-1,((i>>3)&1)*2-1]);
-  const E=[];
-  for(let i=0;i<16;i++) for(let j=i+1;j<16;j++){const d=i^j;if(d&&!(d&(d-1)))E.push([i,j]);}
-  let t=Math.random()*100;
+    // ─── 4D Tesseract ────────────────────────────────────────────────────────
+    function makeTesseract(cvId,projScale,speed){
+      const cv=document.getElementById(cvId);
+      if(!cv)return;
+      const W=cv.width,H=cv.height,cx=cv.getContext('2d');
+      const V=[];
+      for(let i=0;i<16;i++) V.push([((i>>0)&1)*2-1,((i>>1)&1)*2-1,((i>>2)&1)*2-1,((i>>3)&1)*2-1]);
+      const E=[];
+      for(let i=0;i<16;i++) for(let j=i+1;j<16;j++){const d=i^j;if(d&&!(d&(d-1)))E.push([i,j]);}
+      let t=Math.random()*100;
 
-  function rot(v,a1,a2,a3,a4,a5,a6){
-    let [x,y,z,w]=v,nx,ny,nz,nw;
-    nx=x*Math.cos(a1)-y*Math.sin(a1);ny=x*Math.sin(a1)+y*Math.cos(a1);x=nx;y=ny;
-    nx=x*Math.cos(a2)-z*Math.sin(a2);nz=x*Math.sin(a2)+z*Math.cos(a2);x=nx;z=nz;
-    nx=x*Math.cos(a3)-w*Math.sin(a3);nw=x*Math.sin(a3)+w*Math.cos(a3);x=nx;w=nw;
-    ny=y*Math.cos(a4)-z*Math.sin(a4);nz=y*Math.sin(a4)+z*Math.cos(a4);y=ny;z=nz;
-    ny=y*Math.cos(a5)-w*Math.sin(a5);nw=y*Math.sin(a5)+w*Math.cos(a5);y=ny;w=nw;
-    nz=z*Math.cos(a6)-w*Math.sin(a6);nw=z*Math.sin(a6)+w*Math.cos(a6);z=nz;w=nw;
-    return[x,y,z,w];
-  }
+      function rot(v,a1,a2,a3,a4,a5,a6){
+        let [x,y,z,w]=v,nx,ny,nz,nw;
+        nx=x*Math.cos(a1)-y*Math.sin(a1);ny=x*Math.sin(a1)+y*Math.cos(a1);x=nx;y=ny;
+        nx=x*Math.cos(a2)-z*Math.sin(a2);nz=x*Math.sin(a2)+z*Math.cos(a2);x=nx;z=nz;
+        nx=x*Math.cos(a3)-w*Math.sin(a3);nw=x*Math.sin(a3)+w*Math.cos(a3);x=nx;w=nw;
+        ny=y*Math.cos(a4)-z*Math.sin(a4);nz=y*Math.sin(a4)+z*Math.cos(a4);y=ny;z=nz;
+        ny=y*Math.cos(a5)-w*Math.sin(a5);nw=y*Math.sin(a5)+w*Math.cos(a5);y=ny;w=nw;
+        nz=z*Math.cos(a6)-w*Math.sin(a6);nw=z*Math.sin(a6)+w*Math.cos(a6);z=nz;w=nw;
+        return[x,y,z,w];
+      }
 
-  function frame(){
-    t+=0.007*speed;
-    cx.clearRect(0,0,W,H);
-    const aa=[t*.5,t*.31,t*.72,t*.43,t*.19,t*.61];
-    const pts=V.map(v=>{
-      const r=rot(v,...aa);
-      const f4=1/(2.5-r[3]);
-      const px=r[0]*f4,py=r[1]*f4,pz=r[2]*f4;
-      const f3=1/(3.2-pz);
-      return{x:px*f3*projScale+W/2,y:-py*f3*projScale+H/2,w:r[3]};
+      function frame(){
+        t+=0.007*speed;
+        cx.clearRect(0,0,W,H);
+        const aa=[t*.5,t*.31,t*.72,t*.43,t*.19,t*.61];
+        const pts=V.map(v=>{
+          const r=rot(v,...aa);
+          const f4=1/(2.5-r[3]);
+          const px=r[0]*f4,py=r[1]*f4,pz=r[2]*f4;
+          const f3=1/(3.2-pz);
+          return{x:px*f3*projScale+W/2,y:-py*f3*projScale+H/2,w:r[3]};
+        });
+        E.forEach(([i,j])=>{
+          const aw=((pts[i].w+pts[j].w)/2+1)/2;
+          cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
+          cx.strokeStyle=`rgba(45,224,202,${.08+.52*aw})`;
+          cx.lineWidth=.6+.9*aw;cx.stroke();
+        });
+        pts.forEach(({x,y,w})=>{
+          const aw=(w+1)/2;
+          cx.beginPath();cx.arc(x,y,1.4+2*aw,0,Math.PI*2);
+          cx.fillStyle=`rgba(123,143,255,${.15+.8*aw})`;cx.fill();
+        });
+        requestAnimationFrame(frame);
+      }
+      frame();
+    }
+
+    // ─── Terminal ────────────────────────────────────────────────────────────
+    const LINES=[
+      {t:'$ maty-analyzer --problem="Maty(4,2)" --mode=full --verbose',c:'tp',d:0},
+      {t:'Iniciando Ramsey Symbolic Analyzer v4.2.1...',d:450},
+      {t:'─────────────────────────────────────────────────',c:'tdm',d:750},
+      {t:'[INFO] Hipercubo Q_N — vértices: 2^N, aristas: N·2^(N-1)',d:1050},
+      {t:'[INFO] Objetivo: C₄ monocromático en subespacio afín 2D',d:1450},
+      {t:'[INFO] Coloración: χ : E(Q_N) → {R, B}',d:1850},
+      {t:'─────────────────────────────────────────────────',c:'tdm',d:2250},
+      {t:'[1/6] Cota inferior por R(4,4) clásico...',d:2650},
+      {t:'      R(4,4) = 18  →  cota trivial N ≥ 18  [INSUFICIENTE]',c:'tw2',d:3200},
+      {t:'[2/6] Densidad de Zarankiewicz en Q_n...',d:3900},
+      {t:'      ex(Q_n; C₄) < 2^n · n^(1/2)  —  explosión combinatoria confirmada',c:'tw2',d:4500},
+      {t:'[3/6] Complejidad de la verificación directa...',d:5150},
+      {t:'      Matriz de adyacencia: 2^N × 2^N',c:'tw2',d:5650},
+      {t:'      Para N = Maty(4,2): dimensión > tower(tower(tower(...)))',c:'te',d:6200},
+      {t:'      Memoria requerida: indefinida en cualquier modelo físico',c:'te',d:6800},
+      {t:'[4/6] Clasificando en la jerarquía de complejidad...',d:7400},
+      {t:'      PSPACE ⊂ EXPSPACE ⊂ ··· ⊂ BEYONDSPACE',d:8000},
+      {t:'      Instancia: RAMSEY-HYPERCUBE-HARD  ∉  EXPSPACE',c:'te',d:8600},
+      {t:'[5/6] Verificación vía Hales-Jewett generalizado...',d:9300},
+      {t:'      HJ garantiza existencia  pero  N_HJ  <<  Maty(4,2)',c:'tw2',d:9900},
+      {t:'      Salto de escala: supera la función de Ackermann por grados inconmensurables',c:'te',d:10550},
+      {t:'[6/6] Evaluando la notación de Knuth: N = Y↑^G Y...',d:11300},
+      {t:'      G = |dígitos(Graham)| >> 10^(10^(10^···))',c:'te',d:11900},
+      {t:'      Y↑^G Y  trasciende cualquier función primitivo-recursiva',c:'te',d:12550},
+      {t:'      No existe función computable que acote esta expresión',c:'te',d:13150},
+      {t:'─────────────────────────────────────────────────',c:'tdm',d:13750},
+      {t:'⊘  RESULTADO: ALGORÍTMICAMENTE INTRATABLE',c:'te',d:14250},
+      {t:'   Clase:  KNUTH-TOWER-COMPLETE',c:'te',d:14650},
+      {t:'   Tiempo estimado (computadora cuántica universal):  ∞',c:'te',d:15050},
+      {t:'─────────────────────────────────────────────────',c:'tdm',d:15450},
+      {t:'$ _',c:'tp',d:15850},
+    ];
+    let running=false,tos=[];
+
+    function runTerm(){
+      if(running)return;
+      running=true;
+      document.getElementById('runBtn').disabled=true;
+      const tb=document.getElementById('tb');
+      tb.innerHTML='';
+      LINES.forEach(({t,c,d})=>{
+        const to=setTimeout(()=>{
+          const div=document.createElement('div');
+          div.className='tl'+(c?' '+c:'');
+          div.textContent=t;
+          tb.appendChild(div);
+          requestAnimationFrame(()=>div.classList.add('on'));
+          tb.scrollTop=tb.scrollHeight;
+        },d);
+        tos.push(to);
+      });
+      const vto=setTimeout(()=>{
+        document.getElementById('verdict').style.display='block';
+        const rb=document.getElementById('rstBtn');
+        rb.style.opacity='1';rb.style.pointerEvents='auto';
+        running=false;
+      },16600);
+      tos.push(vto);
+    }
+
+    function rstTerm(){
+      tos.forEach(clearTimeout);tos=[];running=false;
+      document.getElementById('tb').innerHTML='';
+      document.getElementById('verdict').style.display='none';
+      document.getElementById('runBtn').disabled=false;
+      const rb=document.getElementById('rstBtn');
+      rb.style.opacity='0';rb.style.pointerEvents='none';
+    }
+
+    // ─── Scroll reveal ───────────────────────────────────────────────────────
+    const obs=new IntersectionObserver(es=>{
+      es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+    },{threshold:0.07});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // ─── Init ────────────────────────────────────────────────────────────────
+    window.addEventListener('load',()=>{
+      const hero=document.getElementById('hero');
+      const tc=document.getElementById('tc');
+      tc.width=hero.offsetWidth||window.innerWidth;
+      tc.height=hero.offsetHeight||400;
+      initKaTeX();
+      makeTesseract('tc',tc.width*0.21,1);
+      makeTesseract('tc2',105,0.9);
+
+      window.addEventListener('resize',()=>{
+        tc.width=hero.offsetWidth||window.innerWidth;
+        tc.height=hero.offsetHeight||400;
+      });
     });
-    E.forEach(([i,j])=>{
-      const aw=((pts[i].w+pts[j].w)/2+1)/2;
-      cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
-      cx.strokeStyle=`rgba(45,224,202,${.08+.52*aw})`;
-      cx.lineWidth=.6+.9*aw;cx.stroke();
-    });
-    pts.forEach(({x,y,w})=>{
-      const aw=(w+1)/2;
-      cx.beginPath();cx.arc(x,y,1.4+2*aw,0,Math.PI*2);
-      cx.fillStyle=`rgba(123,143,255,${.15+.8*aw})`;cx.fill();
-    });
-    requestAnimationFrame(frame);
-  }
-  frame();
-}
-
-// ─── Terminal simulation ─────────────────────────────────────────────────────
-const LINES=[
-  {t:'$ maty-analyzer --problem="Maty(4,2)" --mode=full --verbose',c:'tp',d:0},
-  {t:'Iniciando Ramsey Symbolic Analyzer v4.2.1...',d:450},
-  {t:'─────────────────────────────────────────────────',c:'tdm',d:750},
-  {t:'[INFO] Hipercubo Q_N — vértices: 2^N, aristas: N·2^(N-1)',d:1050},
-  {t:'[INFO] Objetivo: C₄ monocromático en subespacio afín 2D',d:1450},
-  {t:'[INFO] Coloración: χ : E(Q_N) → {R, B}',d:1850},
-  {t:'─────────────────────────────────────────────────',c:'tdm',d:2250},
-  {t:'[1/6] Cota inferior por R(4,4) clásico...',d:2650},
-  {t:'      R(4,4) = 18  →  cota trivial N ≥ 18  [INSUFICIENTE]',c:'tw',d:3200},
-  {t:'[2/6] Densidad de Zarankiewicz en Q_n...',d:3900},
-  {t:'      ex(Q_n; C₄) < 2^n · n^(1/2)  —  explosión combinatoria confirmada',c:'tw',d:4500},
-  {t:'[3/6] Complejidad de la verificación directa...',d:5150},
-  {t:'      Matriz de adyacencia: 2^N × 2^N',c:'tw',d:5650},
-  {t:'      Para N = Maty(4,2): dimensión > tower(tower(tower(...)))',c:'te',d:6200},
-  {t:'      Memoria requerida: indefinida en cualquier modelo físico',c:'te',d:6800},
-  {t:'[4/6] Clasificando en la jerarquía de complejidad...',d:7400},
-  {t:'      PSPACE ⊂ EXPSPACE ⊂ ··· ⊂ BEYONDSPACE',d:8000},
-  {t:'      Instancia: RAMSEY-HYPERCUBE-HARD  ∉  EXPSPACE',c:'te',d:8600},
-  {t:'[5/6] Verificación vía Hales-Jewett generalizado...',d:9300},
-  {t:'      HJ garantiza existencia  pero  N_HJ  <<  Maty(4,2)',c:'tw',d:9900},
-  {t:'      Salto de escala: supera la función de Ackermann por grados inconmensurables',c:'te',d:10550},
-  {t:'[6/6] Evaluando la notación de Knuth: N = Y↑^G Y...',d:11300},
-  {t:'      G = |dígitos(Graham)| >> 10^(10^(10^···))',c:'te',d:11900},
-  {t:'      Y↑^G Y  trasciende cualquier función primitivo-recursiva',c:'te',d:12550},
-  {t:'      No existe función computable que acote esta expresión',c:'te',d:13150},
-  {t:'─────────────────────────────────────────────────',c:'tdm',d:13750},
-  {t:'⊘  RESULTADO: ALGORÍTMICAMENTE INTRATABLE',c:'te',d:14250},
-  {t:'   Clase:  KNUTH-TOWER-COMPLETE',c:'te',d:14650},
-  {t:'   Tiempo estimado (computadora cuántica universal):  ∞',c:'te',d:15050},
-  {t:'─────────────────────────────────────────────────',c:'tdm',d:15450},
-  {t:'$ _',c:'tp',d:15850},
-];
-let running=false,tos=[];
-
-function runTerm(){
-  if(running)return;
-  running=true;
-  document.getElementById('runBtn').disabled=true;
-  const tb=document.getElementById('tb');
-  tb.innerHTML='';
-  LINES.forEach(({t,c,d})=>{
-    const to=setTimeout(()=>{
-      const div=document.createElement('div');
-      div.className='tl'+(c?' '+c:'');
-      div.textContent=t;
-      tb.appendChild(div);
-      requestAnimationFrame(()=>div.classList.add('on'));
-      tb.scrollTop=tb.scrollHeight;
-    },d);
-    tos.push(to);
-  });
-  const vto=setTimeout(()=>{
-    document.getElementById('verdict').style.display='block';
-    const rb=document.getElementById('rstBtn');
-    rb.style.opacity='1';rb.style.pointerEvents='auto';
-    running=false;
-  },16600);
-  tos.push(vto);
-}
-
-function rstTerm(){
-  tos.forEach(clearTimeout);tos=[];running=false;
-  document.getElementById('tb').innerHTML='';
-  document.getElementById('verdict').style.display='none';
-  document.getElementById('runBtn').disabled=false;
-  const rb=document.getElementById('rstBtn');
-  rb.style.opacity='0';rb.style.pointerEvents='none';
-}
-
-// ─── Scroll reveal ─────────────────────────────────────────────────────────
-const obs=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
-},{threshold:0.07});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// ─── Init ──────────────────────────────────────────────────────────────────
-window.addEventListener('load',()=>{
-  const hero=document.getElementById('hero');
-  const tc=document.getElementById('tc');
-  tc.width=hero.offsetWidth||680;
-  tc.height=hero.offsetHeight||400;
-  initKaTeX();
-  makeTesseract('tc', tc.width*0.21, 1);
-  makeTesseract('tc2', 105, 0.9);
-});
-</script>
+  </script>
+</body>
+</html>
